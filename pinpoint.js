@@ -34,7 +34,7 @@
 
       // Editor for pin description
       that.$descr = $('#' + pin.id + ' .descr').unbind();
-      
+
       that.$descr.click(function() {
         that.editor.activate(that.$descr, {
           placeholder: 'Enter Description',

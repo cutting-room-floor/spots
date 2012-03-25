@@ -1,27 +1,27 @@
 <html>
   <head>
     <title>Pinpoint Demo</title>
-    <link rel="stylesheet" href="pinpoint.css" />
+    <link rel='stylesheet' href='pinpoint.css' />
 
-    <script src="lib/leaflet.js"></script>
-    <script src="lib/underscore.js"></script>
-    <script src="lib/jquery.js"></script>
-    <script src="lib/jquery.hotkeys.js"></script>
-    <script src="lib/proper.js"></script>
-    <script src="pinpoint.js"></script>
+    <script src='lib/leaflet.js'></script>
+    <script src='lib/underscore.js'></script>
+    <script src='lib/jquery.js'></script>
+    <script src='lib/jquery.hotkeys.js'></script>
+    <script src='lib/proper.js'></script>
+    <script src='pinpoint.js'></script>
 
-    <script type="text/x-ejs-template" name="pinpoint_annotation">
-      <div class="pin" id="<%= id%>">
-        <div class="name<%= !name ? ' empty' : '' %>" title="Click to edit">&laquo; Enter Name &raquo;</div>
-        <div class="descr<%= !descr ? ' empty' : '' %>" title="Click to edit"><p>&laquo; Enter Description &raquo;</p></div>
+    <script type='text/x-ejs-template' name='pinpoint_annotation'>
+      <div class='pin' id='<%= id%>'>
+        <div class='name<%= !name ? " empty" : '' %>' title='Click to edit'>Enter Name</div>
+        <div class='descr<%= !descr ? " empty" : '' %>' title='Click to edit'><p>Enter Description&hellip;</p></div>
       </div>
     </script>
   </head>
   <body>
     <h1>Pinpoint</h1>
-    <div id="map" style="width: 800px; height: 400px"></div>
-    <script type="text/javascript">
-    
+    <div id='map' style='width: 800px; height: 400px'></div>
+    <script>
+
     $(function() {
       var map = new L.Map('map', {
           layers: new L.TileLayer('http://a.tiles.mapbox.com/v3/mapbox.mapbox-streets/{z}/{x}/{y}.png', {}),
