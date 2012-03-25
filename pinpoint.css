@@ -7,6 +7,13 @@ div:focus {
   outline: none;
   }
 
+h1 {
+  margin: 0; padding: 0;
+  }
+div.subtitle {
+  margin-bottom: 20px;
+  }
+
 /* Pin info styles */
 .pin .name {
   font-weight: bold;
@@ -14,6 +21,15 @@ div:focus {
   }
 .pin .descr {
   color: #929292;
+  }
+.pin .delete-pin {
+  display: block;
+  text-align: right;
+  font-size: 11px;
+  text-decoration: none;
+  color: #D14;
+  margin: 0;
+  padding: 0;
   }
 
 /* required styles */
@@ -292,7 +308,7 @@ a.leaflet-active {
   text-align: left;
   }
 .leaflet-popup-content {
-  margin: 12px 10px;
+  margin: 12px 10px 5px;
   }
 .leaflet-popup-tip-container {
   margin: 0 auto;
