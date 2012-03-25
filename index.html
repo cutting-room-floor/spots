@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <title>Pinpoint Demo</title>
+    <link rel="stylesheet" href="pinpoint.css" />
+
+    <script src="lib/leaflet.js"></script>
+    <script src="lib/underscore.js"></script>
+    <script src="lib/jquery.js"></script>
+    <script src="lib/jquery.hotkeys.js"></script>
+    <script src="lib/proper.js"></script>
+    <script src="pinpoint.js"></script>
+
+    <script type="text/x-ejs-template" name="pinpoint_annotation">
+      <div class="pin" id="<%= id%>">
+        <div class="name<%= !name ? ' empty' : '' %>" title="Click to edit">&laquo; Enter Name &raquo;</div>
+        <div class="descr<%= !descr ? ' empty' : '' %>" title="Click to edit"><p>&laquo; Enter Description &raquo;</p></div>
+      </div>
+    </script>
+  </head>
+  <body>
+    <h1>Pinpoint</h1>
+    <div id="map" style="width: 800px; height: 400px"></div>
+    <script type="text/javascript">
+    
+    $(function() {
+      var map = new L.Map('map', {
+          layers: new L.TileLayer('http://a.tiles.mapbox.com/v3/mapbox.mapbox-streets/{z}/{x}/{y}.png', {}),
+          center: new L.LatLng(51.505, -0.09),
+          zoom: 13,
+          attributionControl: false
+        });
+
+      var annotator = new Pinpoint(map, {
+        update: function(pins) {
+          console.log('your pins just got updated.');
+        }
+      });
+    });
+
+    </script>
+  </body>
+</html>
