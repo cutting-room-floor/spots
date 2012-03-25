@@ -12,17 +12,35 @@
 
     <script type="text/x-ejs-template" name="pinpoint_annotation">
       <div class="pin" id="<%= id%>">
-        <div class="name<%= !name ? ' empty' : '' %>" title="Click to edit">&laquo; Enter Name &raquo;</div>
-        <div class="descr<%= !descr ? ' empty' : '' %>" title="Click to edit"><p>&laquo; Enter Description &raquo;</p></div>
-        <div><a href="#" class="delete-pin">Delete Pin</div>
+        <div class="name<%= !name ? ' empty' : '' %>" title="Click to edit"><%= !name ? '&laquo; Enter Name &raquo;' : name %></div>
+        <div class="controls" style="height: 20px; margin-top: 10px;"></div>
+        <div class="descr<%= !descr ? ' empty' : '' %>" title="Click to edit"><%= !descr ? '<p>&laquo; Enter Description &raquo;</p>' : descr %></div>
+        <div><a href="#" class="remove-pin">Remove Pin</div>
       </div>
+    </script>
+
+    <script type="text/x-ejs-template" name="pins_info">
+      <% _.each(pins, function(pin) { %>
+        <div class="pin-info">
+          <div class="name"><%= pin.name ? pin.name : "Unnamed" %></div>
+          <div class="descr"><%= pin.descr %></div>
+        </div>
+      <% }); %>
     </script>
   </head>
   <body>
     <div class="container">
       <h1>Pinpoint</h1>
       <div class="subtitle">Annotates maps.</div>
-      <div id="map" style="width: 800px; height: 400px"></div>
+      <div id="map" style="width: 800px; height: 600px"></div>
+
+      <div id="pins_info">
+        <h2>Your Pins:</h2>
+        <div id="pins_listing">
+
+        </div>
+      </div>
+
       <script type="text/javascript">
       
       $(function() {
@@ -35,9 +53,11 @@
 
         var annotator = new Pinpoint(map, {
           update: function(pins) {
-            console.log('your pins just got updated.');
+            $('#pins_listing').html(_.template($("script[name=pins_info]").html(), {pins: pins}));
           }
         });
+
+        annotator.addPin(51.505, -0.09, "Hello", "<p>A Pinpoint Pin, saying hello.</p>");
       });
 
       </script>

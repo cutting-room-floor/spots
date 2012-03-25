@@ -1,5 +1,7 @@
 body {
   font-family: Helvetica;
+  margin-left: 50px;
+  margin-top: 20px;
 }
 
 div:focus {
@@ -11,6 +13,29 @@ h1 {
 }
 div.subtitle {
   margin-bottom: 20px;
+}
+
+#pins_info {
+  position: absolute;
+  top: 80px;
+  left: 900px;
+  width: 300px;
+  
+}
+
+#pins_listing .pin-info {
+  border-bottom: 1px dashed;
+  padding: 10px 0;
+}
+
+#pins_listing .pin-info .name {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+#pins_listing .pin-info .descr {
+  color: #777;
+  font-size: 12px;
 }
 
 /* Pin info styles */
