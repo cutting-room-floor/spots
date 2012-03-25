@@ -48,7 +48,7 @@ div.subtitle {
 .pin .descr {
   color: #929292;
   }
-.pin .delete-pin {
+.pin .remove-pin {
   display: block;
   text-align: right;
   font-size: 11px;
