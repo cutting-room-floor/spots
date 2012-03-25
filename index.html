@@ -14,29 +14,33 @@
       <div class="pin" id="<%= id%>">
         <div class="name<%= !name ? ' empty' : '' %>" title="Click to edit">&laquo; Enter Name &raquo;</div>
         <div class="descr<%= !descr ? ' empty' : '' %>" title="Click to edit"><p>&laquo; Enter Description &raquo;</p></div>
+        <div><a href="#" class="delete-pin">Delete Pin</div>
       </div>
     </script>
   </head>
   <body>
-    <h1>Pinpoint</h1>
-    <div id="map" style="width: 800px; height: 400px"></div>
-    <script type="text/javascript">
-    
-    $(function() {
-      var map = new L.Map('map', {
-          layers: new L.TileLayer('http://a.tiles.mapbox.com/v3/mapbox.mapbox-streets/{z}/{x}/{y}.png', {}),
-          center: new L.LatLng(51.505, -0.09),
-          zoom: 13,
-          attributionControl: false
+    <div class="container">
+      <h1>Pinpoint</h1>
+      <div class="subtitle">Annotates maps.</div>
+      <div id="map" style="width: 800px; height: 400px"></div>
+      <script type="text/javascript">
+      
+      $(function() {
+        var map = new L.Map('map', {
+            layers: new L.TileLayer('http://a.tiles.mapbox.com/v3/mapbox.mapbox-streets/{z}/{x}/{y}.png', {}),
+            center: new L.LatLng(51.505, -0.09),
+            zoom: 13,
+            attributionControl: false
+          });
+
+        var annotator = new Pinpoint(map, {
+          update: function(pins) {
+            console.log('your pins just got updated.');
+          }
         });
-
-      var annotator = new Pinpoint(map, {
-        update: function(pins) {
-          console.log('your pins just got updated.');
-        }
       });
-    });
 
-    </script>
+      </script>
+    </div>
   </body>
 </html>

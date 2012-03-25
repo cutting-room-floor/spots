@@ -6,6 +6,13 @@ div:focus {
     outline: none;
 }
 
+h1 {
+  margin: 0; padding: 0;
+}
+div.subtitle {
+  margin-bottom: 20px;
+}
+
 /* Pin info styles */
 
 .pin .name {

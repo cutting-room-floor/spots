@@ -65,10 +65,16 @@
       // TODO: implement
     }
 
+    var clickCount = 0;
     // Add new pin, every time the map gets clicked
-    map.on('click', function(e) { 
-      console.log(e);
-      addPin(e.latlng.lat, e.latlng.lng);
+    map.on('click', function(e) {
+      clickCount += 1;
+      if (clickCount <= 1) {
+        _.delay(function() {
+          if (clickCount <= 1) addPin(e.latlng.lat, e.latlng.lng);
+          clickCount = 0;
+        }, 200);
+      }
     });
 
     // Initialize popup
