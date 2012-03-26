@@ -52,13 +52,15 @@
         that.$descr.click(function() {
           that.editor.activate(that.$descr, {
             placeholder: '<p>Enter Description&hellip;</p>',
-            controlsTarget: $el.find('.controls').addClass('activated')
+            controlsTarget: $el.find('.controls')
           });
 
           that.editor.bind('changed', function() {
             pin.descr = that.editor.content();
             options.update(that.pins);
           });
+
+          $el.find('.controls').addClass('activated');
         });
       }
 
