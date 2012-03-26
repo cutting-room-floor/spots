@@ -50,7 +50,7 @@
         
         that.$descr.click(function() {
           that.editor.activate(that.$descr, {
-            placeholder: 'Enter Description',
+            placeholder: '<p>Enter Description&hellip;</p>',
             controlsTarget: $el.find('.controls')
           });
 
@@ -61,7 +61,7 @@
         });        
       }
 
-      _.delay(init, 1000);
+      _.delay(init, 1);
     }
 
     var clickCount = 0;
