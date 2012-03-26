@@ -12,9 +12,9 @@
 
     <script type="text/x-ejs-template" name="pinpoint_annotation">
       <div class="pin" id="<%= id%>">
-        <div class="name<%= !name ? ' empty' : '' %>" title="Click to edit"><%= !name ? '&laquo; Enter Name &raquo;' : name %></div>
+        <div class="name<%= !name ? ' empty' : '' %>" title="Click to edit"><%= !name ? 'Enter Name' : name %></div>
         <div class="controls" style="height: 20px; margin-top: 10px;"></div>
-        <div class="descr<%= !descr ? ' empty' : '' %>" title="Click to edit"><%= !descr ? '<p>&laquo; Enter Description &raquo;</p>' : descr %></div>
+        <div class="descr<%= !descr ? ' empty' : '' %>" title="Click to edit"><%= !descr ? '<p>Description&hellip;</p>' : descr %></div>
         <div><a href="#" class="remove-pin">Remove Pin</div>
       </div>
     </script>
@@ -41,8 +41,8 @@
         </div>
       </div>
 
-      <script type="text/javascript">
-      
+      <script>
+
       $(function() {
         var map = new L.Map('map', {
             layers: new L.TileLayer('http://a.tiles.mapbox.com/v3/mapbox.mapbox-streets/{z}/{x}/{y}.png', {}),
