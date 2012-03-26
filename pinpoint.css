@@ -1,6 +1,5 @@
 body {
-  margin-left: 50px;
-  margin-top: 20px;
+  padding: 20px;
   font: 13px/22px 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: #404040;
   }
@@ -22,23 +21,19 @@ div.subtitle {
   top: 80px;
   left: 900px;
   width: 300px;
-  
-}
+  }
 
 #pins_listing .pin-info {
   border-bottom: 1px dashed;
   padding: 10px 0;
-}
-
+  }
 #pins_listing .pin-info .name {
   font-size: 20px;
   font-weight: bold;
-}
-
+  }
 #pins_listing .pin-info .descr {
-  color: #777;
-  font-size: 12px;
-}
+  color: #929292;
+  }
 
 /* Pin info styles */
 .pin .name {
@@ -57,6 +52,18 @@ div.subtitle {
   margin: 0;
   padding: 0;
   }
+.pin .controls {
+  height: 0!important;
+  -moz-transition: all 150ms ease-out;
+  -o-transition: all 150ms ease-out;
+  -webkit-transition: all 150ms ease-out;
+  transition: all 150ms ease-out;
+  }
+  .pin .controls.activated {
+  height: 20px!important;
+  margin: 10px 0 20px;
+  }
+
 
 /* required styles */
 

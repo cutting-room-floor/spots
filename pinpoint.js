@@ -23,7 +23,7 @@
 
 
       function init() {
-        // Delete pin handler
+        // Delete pin handler`
         $el.find('.remove-pin').unbind().bind('click', function() {
           return that.removePin(pin.id);
         });
@@ -32,7 +32,6 @@
         that.$name = $el.find('.name').unbind();
 
         that.$name.click(function() {
-          console.log('clicked on name');
           that.editor.activate(that.$name, {
             placeholder: 'Enter Name',
             markup: false,
@@ -43,22 +42,24 @@
             pin.name = that.editor.content();
             options.update(that.pins);
           });
+
+           $el.find('.controls').removeClass('activated');
         });
 
         // Editor for pin description
         that.$descr = $el.find('.descr').unbind();
-        
+
         that.$descr.click(function() {
           that.editor.activate(that.$descr, {
             placeholder: '<p>Enter Description&hellip;</p>',
-            controlsTarget: $el.find('.controls')
+            controlsTarget: $el.find('.controls').addClass('activated')
           });
 
           that.editor.bind('changed', function() {
             pin.descr = that.editor.content();
             options.update(that.pins);
           });
-        });        
+        });
       }
 
       _.delay(init, 1);
