@@ -50,7 +50,7 @@
         
         that.$descr.click(function() {
           that.editor.activate(that.$descr, {
-            placeholder: 'Enter Description',
+            placeholder: 'Description&hellip;',
             controlsTarget: $el.find('.controls')
           });
 
