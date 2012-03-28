@@ -4,6 +4,9 @@ body {
   color: #404040;
   }
 
+textarea {
+  resize:both;
+}
 
 div:focus {
   outline: none;

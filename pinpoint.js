@@ -2,13 +2,11 @@
 // Pinpoint.js is freely distributable under the BSD license.
 
 (function(window){
-  
 
   var TEMPLATE = '\
         <div class="pin" id="<%= id%>"> \
-        <div class="name<%= !name ? " empty" : "" %>" title="Click to edit"><%= !name ? "Enter Name" : name %></div> \
-        <div class="controls" style="height: 20px; margin-top: 10px;"></div> \
-        <div class="descr<%= !descr ? " empty" : "" %>" title="Click to edit"><%= !descr ? "<p>Description&hellip;</p>" : descr %></div> \
+        <div><input type="text" class="name" placeholder="Enter Name"/></div> \
+        <div><textarea class="descr" placeholder="Description&hellip;"></textarea></div> \
         <div><a href="#" class="remove-pin">Remove Pin</div> \
       </div>';
 
@@ -17,8 +15,8 @@
 
   var Pinpoint = window.Pinpoint = function(map, options) {
     var that = this;
+    var popupOpen = false;
     this.pins = {};
-    this.editor = new Proper();
 
     function tpl(name, data) {
       return _.template(TEMPLATE, data);
@@ -27,61 +25,25 @@
     function initPin(pin) {
       var $el = $('#' + pin.id);
 
-      if (pin.name) $el.find('.name').html(pin.name);
-      if (pin.descr) $el.find('.descr').html(pin.descr);
+      if (pin.name) $el.find('.name').val(pin.name);
+      if (pin.descr) $el.find('.descr').val(pin.descr);
 
-      function init() {
-        // Delete pin handler`
-        $el.find('.remove-pin').unbind().bind('click', function() {
-          that.removePin(pin.id);
-          return false;
-        });
-
-        // Editor for pin name
-        that.$name = $el.find('.name').unbind();
-
-        that.$name.click(function() {
-          that.editor.activate(that.$name, {
-            placeholder: 'Enter Name',
-            markup: false,
-            multiline: false
-          });
-
-          that.editor.bind('changed', function() {
-            pin.name = that.editor.content();
-            options.update(that.getPins());
-          });
-
-           $el.find('.controls').removeClass('activated');
-        });
-
-        // Editor for pin description
-        that.$descr = $el.find('.descr').unbind();
-
-        that.$descr.click(function() {
-          that.editor.activate(that.$descr, {
-            placeholder: '<p>Enter Description&hellip;</p>',
-            controlsTarget: $el.find('.controls'),
-            markup: false
-          });
-
-          that.editor.bind('changed', function() {
-            pin.descr = that.editor.content();
-            options.update(that.getPins());
-          });
-        });
-      }
-
-      _.delay(init, 1);
+      $el.find('.remove-pin').unbind().bind('click', function() {
+        that.removePin(pin.id);
+        return false;
+      });
     }
 
     var clickCount = 0;
     // Add new pin, every time the map gets clicked
     map.on('click', function(e) {
+      console.log('MEEH');
       clickCount += 1;
       if (clickCount <= 1) {
         _.delay(function() {
-          if (clickCount <= 1) that.addPin(e.latlng.lat, e.latlng.lng);
+          if (clickCount <= 1) {
+            that.addPin(e.latlng.lat, e.latlng.lng);
+          }
           clickCount = 0;
         }, 200);
       }
@@ -89,8 +51,11 @@
 
     // Initialize popup
     map.on('popupopen', function(e) {
+      popupOpen = true;
       initPin(that.pins[$(e.popup._container).find('.pin').attr('id')]);
     });
+
+    map.on('popupclose')
 
 
     // Expose public API
@@ -119,7 +84,7 @@
       map.addLayer(pin.marker);
       pin.marker.bindPopup(tpl('pinpoint_annotation', pin)).openPopup();
       if (!silent) options.update(that.getPins());
-    }
+    };
 
     this.removePin = function(pin) {
       var pin = this.pins[pin];

@@ -6,18 +6,8 @@
     <script src="lib/leaflet.js"></script>
     <script src="lib/underscore.js"></script>
     <script src="lib/jquery.js"></script>
-    <script src="lib/jquery.hotkeys.js"></script>
-    <script src="lib/proper.js"></script>
     <script src="pinpoint.js"></script>
 
-    <script type="text/x-ejs-template" name="pinpoint_annotation">
-      <div class="pin" id="<%= id%>">
-        <div class="name<%= !name ? ' empty' : '' %>" title="Click to edit"><%= !name ? 'Enter Name' : name %></div>
-        <div class="controls" style="height: 20px; margin-top: 10px;"></div>
-        <div class="descr<%= !descr ? ' empty' : '' %>" title="Click to edit"><%= !descr ? '<p>Description&hellip;</p>' : descr %></div>
-        <div><a href="#" class="remove-pin">Remove Pin</div>
-      </div>
-    </script>
 
     <script type="text/x-ejs-template" name="pins_info">
       <% _.each(pins, function(pin) { %>
@@ -27,6 +17,7 @@
         </div>
       <% }); %>
     </script>
+
   </head>
   <body>
     <div class="container">
@@ -48,6 +39,7 @@
             layers: new L.TileLayer('http://a.tiles.mapbox.com/v3/mapbox.mapbox-streets/{z}/{x}/{y}.png', {}),
             center: new L.LatLng(51.505, -0.09),
             zoom: 13,
+            maxZoom: 17,
             attributionControl: false
           });
 
@@ -57,7 +49,7 @@
           }
         });
 
-        annotator.addPin(51.505, -0.09, "Hello", "<p>A Pinpoint Pin, saying hello.</p>");
+        annotator.addPin(51.505, -0.09, "Hello", "A Pinpoint Pin, saying hello.");
       });
       </script>
     </div>
