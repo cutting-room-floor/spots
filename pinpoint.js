@@ -7,7 +7,7 @@
         <div class="pin" id="<%= id%>"> \
         <div><input type="text" class="name" placeholder="Enter Name"/></div> \
         <div><textarea class="descr" placeholder="Description&hellip;"></textarea></div> \
-        <div><a href="#" class="remove-pin">Remove Pin</div> \
+        <div><a href="#" class="remove-pin"></div> \
       </div>';
 
   // Initial Setup
@@ -37,7 +37,7 @@
     var clickCount = 0;
     // Add new pin, every time the map gets clicked
     map.on('click', function(e) {
-      if (!popupOpen) return;
+      if (popupOpen) return;
       clickCount += 1;
       if (clickCount <= 1) {
 
@@ -52,7 +52,6 @@
 
     // Initialize popup
     map.on('popupopen', function(e) {
-      console.log('openpopup');
       popupOpen = true;
       initPin(that.pins[$(e.popup._container).find('.pin').attr('id')]);
     });
