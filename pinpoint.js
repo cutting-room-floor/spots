@@ -37,9 +37,10 @@
     var clickCount = 0;
     // Add new pin, every time the map gets clicked
     map.on('click', function(e) {
-      console.log('MEEH');
+      if (!popupOpen) return;
       clickCount += 1;
       if (clickCount <= 1) {
+
         _.delay(function() {
           if (clickCount <= 1) {
             that.addPin(e.latlng.lat, e.latlng.lng);
@@ -51,12 +52,14 @@
 
     // Initialize popup
     map.on('popupopen', function(e) {
+      console.log('openpopup');
       popupOpen = true;
       initPin(that.pins[$(e.popup._container).find('.pin').attr('id')]);
     });
 
-    map.on('popupclose')
-
+    map.on('popupclose', function(e) {
+      _.delay(function() { popupOpen = false }, 10);
+    });
 
     // Expose public API
     // -------------
