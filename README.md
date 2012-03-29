@@ -12,7 +12,7 @@ maps that are support by Leaflet. You can add an as many pins as you
 want, name and describe them, move them around and remove them when no
 longer needed.
 
-![image](http://substance-assets.s3.amazonaws.com/02/d9afbfbe522eeeb9f2a591c31ba102/pinpoint.png)
+![image](http://substance-assets.s3.amazonaws.com/c0/fc0e1bf26323c456c46ab6d346aa94/pinpoint.png)
 
 Usage
 --------
