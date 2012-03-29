@@ -38,14 +38,6 @@ div.subtitle {
   color: #929292;
   }
 
-/* Pin info styles */
-.pin .name {
-  font-weight: bold;
-  font-size: 18px;
-  }
-.pin .descr {
-  color: #929292;
-  }
 
 
 .pin .remove-pin {
@@ -77,6 +69,42 @@ div.subtitle {
   height: 20px!important;
   margin: 10px 0 20px;
   }
+
+textarea,
+input { font: 13px/20px 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+
+.pin {
+  padding: 10px;
+}
+
+.pin input {
+  width: 280px;
+  outline: none;
+  -webkit-appearance: none;
+  border: 1px solid transparent;
+  color: #202020;
+  font: 20px 'Palatino Linotype', 'Book Antiqua', Palatino, FreeSerif, serif;
+  background: transparent;
+  border: 1px solid transparent;
+  height: 45px;
+  display: block;
+  margin-bottom: 5px;
+  box-shadow: none;
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+}
+
+.pin textarea {
+  color: #444;
+  outline: none;
+  -webkit-appearance: none;
+  width: 280px;
+  height: 70px;
+  resize: none;
+  border: none;
+  font-size: 14px;
+}
 
 
 /* required styles */

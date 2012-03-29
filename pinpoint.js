@@ -5,8 +5,8 @@
 
   var TEMPLATE = '\
         <div class="pin" id="<%= id%>"> \
-        <div><input type="text" class="name" placeholder="Enter Name"/></div> \
-        <div><textarea class="descr" placeholder="Description&hellip;"></textarea></div> \
+        <div><input type="text" class="name" placeholder="Enter Name" maxlength="30"/></div> \
+        <div><textarea class="descr" placeholder="Description&hellip;" maxlength="140"></textarea></div> \
         <div><a href="#" class="remove-pin"></div> \
       </div>';
 
@@ -28,6 +28,16 @@
       if (pin.name) $el.find('.name').val(pin.name);
       if (pin.descr) $el.find('.descr').val(pin.descr);
 
+      $el.find('.name').change(function(e) {
+        pin.name = $(this).val();
+        options.update(that.getPins());
+      });
+
+      $el.find('.descr').change(function(e) {
+        pin.descr = $(this).val();
+        options.update(that.getPins());
+      });
+
       $el.find('.remove-pin').unbind().bind('click', function() {
         that.removePin(pin.id);
         return false;
@@ -46,7 +56,7 @@
             that.addPin(e.latlng.lat, e.latlng.lng);
           }
           clickCount = 0;
-        }, 200);
+        }, 500);
       }
     });
 
