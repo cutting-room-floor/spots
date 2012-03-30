@@ -1,4 +1,4 @@
-Pinpoint
+MapBox Spot
 ========
 
 
