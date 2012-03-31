@@ -1,34 +1,45 @@
 <html>
   <head>
-    <title>Pinpoint Demo</title>
-    <link rel='stylesheet' href='pinpoint.css' />
+    <title>Mapbox Spots</title>
+    <link rel='stylesheet' href='spots.css' />
 
     <script src="lib/leaflet.js"></script>
     <script src="lib/underscore.js"></script>
+    <script src="lib/data.js"></script>
     <script src="lib/jquery.js"></script>
-    <script src="pinpoint.js"></script>
+    <script src="lib/dance.js"></script>
+    <script src="spots.js"></script>
 
+    <script type="text/x-ejs-template" name="overview">
+      <div class="spots">
+        <% spots.each(function(spot) { %>
+          <div class="spot" data-id="<%= spot.id %>">
+            
+          </div>
+        <% }); %>
+      </div>
+    </script>
 
-    <script type="text/x-ejs-template" name="pins_info">
-      <% _.each(pins, function(pin) { %>
-        <div class="pin-info">
-          <div class="name"><%= pin.name ? pin.name : "Unnamed" %></div>
-          <div class="descr"><%= pin.descr %></div>
-        </div>
-      <% }); %>
+    <script type="text/x-ejs-template" name="spot">
+      <div class="spot-details" id="<%= spot.id %>">
+        <div><input type="text" class="name" placeholder="Enter Name" value="<%= spot.name %>" maxlength="30"/></div>
+        <div><textarea class="descr" placeholder="Description&hellip;" maxlength="140"><%= spot.descr %></textarea></div>
+        <div><a href="#" class="remove-spot"></div>
+      </div>
     </script>
 
   </head>
   <body>
     <div class="container">
-      <h1>Pinpoint</h1>
+      <h1>MapBox Spots</h1>
       <div class="subtitle">Annotates maps.</div>
-      <div id="map" style="width: 800px; height: 600px"></div>
+      <div id="map_wrapper" style="width: 800px;">
+        <div id="map" style="width: 800px; height: 450px">
 
-      <div id="pins_info">
-        <h2>Your Pins:</h2>
-        <div id="pins_listing">
-
+        </div>
+        <div class="spots-container">
+          <div class="spot-details"></div>
+          <div class="spots-navigation"></div>
         </div>
       </div>
 
@@ -43,16 +54,30 @@
             attributionControl: false
           });
 
-        var annotator = new Pinpoint(map, {
-          update: function(pins) {
-            $('#pins_listing').html(_.template($("script[name=pins_info]").html(), {pins: pins}));
+        var spots = new Data.Hash({
+          "spot1": {
+            "latitude": 51.505,
+            "longitude": -0.09,
+            "name": "Hello Spot",
+            "descr": "A spot saying hello"
           }
         });
 
-        annotator.addPin(51.505, -0.09, "Hello", "A Pinpoint Pin, saying hello.");
+        var spots = new Spots({
+          el: '.spots-container',
+          map: map,
+          spots: spots
+        });
+
+        spots.bind('update', function(spots) {
+          // store spots, anyone?
+        });
+
+        spots.render();
       });
       </script>
     </div>
+
     <a href="http://github.com/michael/pinpoint"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://assets2.github.com/img/71eeaab9d563c2b3c590319b398dd35683265e85?repo=&url=http%3A%2F%2Fs3.amazonaws.com%2Fgithub%2Fribbons%2Fforkme_right_gray_6d6d6d.png&path=" alt="Fork me on GitHub"></a>
   </body>
 </html>
