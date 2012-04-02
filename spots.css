@@ -1,5 +1,7 @@
 body {
-  padding: 20px;
+  /*padding: 20px;*/
+  margin: 0;
+  padding: 0;
   font: 13px/22px 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: #404040;
   }
@@ -8,15 +10,39 @@ textarea,
 input { font: 13px/20px 'Helvetica Neue', Helvetica, Arial, sans-serif; }
 
 
+.header {
+  position: absolute;
+  top: 0px;
+  left: 70px;
+  color: #fff;
+  z-index: 500;
+}
+
+.header h1 {
+  height: 65px;
+  background: #444;
+  font-size: 45px;
+  line-height: 65px;
+  margin: 0;
+  padding: 0 5px;
+  opacity: 0.9;
+}
+
+.header .subtitle {
+  color: #ddd;
+  border-top: 1px solid #fff;
+  background: #444;
+  padding: 0 5px;
+  font-size: 18px;
+  opacity: 0.9;
+}
+
 .spots-container {
   border-top: 1px solid #ccc;
   position: relative;
   top: -80px;
   height: 80px;
   background: #E1E2DC;
-
-  opacity: 0.9;
-
   }
 
   .spots-container .spot-details {
@@ -57,26 +83,28 @@ input { font: 13px/20px 'Helvetica Neue', Helvetica, Arial, sans-serif; }
   border: none;
 }
 
-  .spots-container .spots {
+  .spots-container .spots-navigation {
      margin-top: 12px;
-     overflow: auto;
      }
 
-  .spots-container .spots .spot {
-    float: left;
+  .spots-container .spots-navigation .spot {
+    position: absolute;
     width: 50px;
     height: 50px;
-    /*background: #888;*/
     border-radius: 28px;
 
-    background: url('images/icon.png') no-repeat center;
+    background: url('images/map-thumb.png') no-repeat center;
     background-color: #888;
     border: 3px solid #fff;
     margin-left: 20px;
+
+    -moz-transition-duration:    0.4s;
+    -webkit-transition-duration: 0.4s;
+    transition-duration:         0.4s;
   }
 
-  .spots-container .spots .spot:hover {
-    background-color: #555;
+  .spots-container .spots-navigation .spot:hover, .spots-container .spots-navigation .spot.active {
+    border: 3px solid #555;
   }
 
 

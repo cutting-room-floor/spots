@@ -7,6 +7,7 @@
     <script src="lib/underscore.js"></script>
     <script src="lib/data.js"></script>
     <script src="lib/jquery.js"></script>
+    <script src="lib/jquery.hotkeys.js"></script>
     <script src="lib/dance.js"></script>
     <script src="spots.js"></script>
 
@@ -20,8 +21,14 @@
       </div>
     </script>
 
+    <script type="text/x-ejs-template" name="nav_spot">
+      <div class="spot<%= active ? " active" : "" %>" id="<%= spot.id %>" data-id="<%= spot.id %>">
+        
+      </div>
+    </script>
+
     <script type="text/x-ejs-template" name="spot">
-      <div class="spot-details" id="<%= spot.id %>">
+      <div class="spot-details" data-id="<%= spot.id %>">
         <div><input type="text" class="name" placeholder="Enter Name" value="<%= spot.name %>" maxlength="30"/></div>
         <div><textarea class="descr" placeholder="Description&hellip;" maxlength="140"><%= spot.descr %></textarea></div>
         <div><a href="#" class="remove-spot"></div>
@@ -31,10 +38,12 @@
   </head>
   <body>
     <div class="container">
-      <h1>MapBox Spots</h1>
-      <div class="subtitle">Annotates maps.</div>
-      <div id="map_wrapper" style="width: 800px;">
-        <div id="map" style="width: 800px; height: 450px">
+      <div class="header">
+        <h1>MapBox Spots&#8482;</h1>
+        <div class="subtitle">Tell a story, using maps.</div>
+      </div>
+      <div id="map_wrapper" style="width: 100%; height: 100%">
+        <div id="map" style="width: 100%; height: 100%;">
 
         </div>
         <div class="spots-container">
@@ -58,8 +67,14 @@
           "spot1": {
             "latitude": 51.505,
             "longitude": -0.09,
-            "name": "Hello Spot",
+            "name": "A spot",
             "descr": "A spot saying hello"
+          },
+          "spot2": {
+            "latitude": 40.505,
+            "longitude": -0.08,
+            "name": "Another",
+            "descr": "Another spot"
           }
         });
 
