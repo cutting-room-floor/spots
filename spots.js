@@ -22,6 +22,7 @@ collections["spots"] = {
       })).css('left', spot.pos.x)
          .css('bottom', -70)
          .appendTo($('.spots-navigation'));
+
     });
     _.delay(this.collections["spots"].update, 200, spots)
   },
@@ -33,7 +34,7 @@ collections["spots"] = {
     spots.each(function(spot) {
       $('#'+spot.id)
        .css('left', spot.pos.x)
-       .css('bottom', 10);
+       .css('bottom', 10)
     });
   },
 
@@ -106,7 +107,7 @@ var Spots = window.Spots = Dance.Performer.extend({
   layout: function(property) {
     this.data["spots"].each(function(spot, key, index) {
       spot.pos = {
-        x: index*70,
+        x: index*100,
       };
     });
   },
@@ -159,6 +160,7 @@ var Spots = window.Spots = Dance.Performer.extend({
       var pos = e.target._latlng;
       spot.latitude = pos.lat;
       spot.longitude = pos.lng;
+      this.render();
       this.trigger('update', this.spots);
     }
     
