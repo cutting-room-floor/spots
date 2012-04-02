@@ -3,32 +3,42 @@
 
 (function(window){
 
-// Stack Cells
+// Spots
 // ------------
 
 var collections = {};
 
 collections["spots"] = {
+  
+  // New Spots
+  // -------------------
+
   enter: function(spots) {
     var that = this;
     spots.each(function(spot, key, index) {
-      var spot = $(_.template($('script[name=nav_spot]').html(), {spot: spot, active: that.activeSpot === spot}))
-            .css('left', spot.pos.x)
-            .css('bottom', -70)
-            .appendTo($('.spots-navigation'));
+      var spot = $(_.template($('script[name=nav_spot]').html(), {
+        spot: spot,
+        active: that.activeSpot === spot
+      })).css('left', spot.pos.x)
+         .css('bottom', -70)
+         .appendTo($('.spots-navigation'));
     });
-
     _.delay(this.collections["spots"].update, 200, spots)
   },
 
+  // Existing Spots
+  // -------------------
+
   update: function(spots) {
     spots.each(function(spot) {
-
-      var spot = $('#'+spot.id)
-                   .css('left', spot.pos.x)
-                   .css('bottom', 10);
+      $('#'+spot.id)
+       .css('left', spot.pos.x)
+       .css('bottom', 10);
     });
   },
+
+  // Removed Spots
+  // -------------------
 
   exit: function(spots) {
     spots.each(function(item) {
@@ -36,6 +46,8 @@ collections["spots"] = {
     });
   }
 };
+
+
 
 var Spots = window.Spots = Dance.Performer.extend({
 
@@ -67,13 +79,9 @@ var Spots = window.Spots = Dance.Performer.extend({
     this.activeSpot.descr = this.$('.descr').val();
   },
 
-  layout: function(property) {
-    this.data["spots"].each(function(spot, key, index) {
-      spot.pos = {
-        x: index*70,
-      };
-    });
-  },
+
+  // Contructor
+  // -------------------
 
   initialize: function(options) {
     this.map = options.map;
@@ -87,10 +95,24 @@ var Spots = window.Spots = Dance.Performer.extend({
     }, this));
 
     this.activeSpot = this.spots.first();
-
     this.registerMapEvents();
     this.registerKeyBindings();
   },
+
+
+  // Calculating layout
+  // -------------------
+
+  layout: function(property) {
+    this.data["spots"].each(function(spot, key, index) {
+      spot.pos = {
+        x: index*70,
+      };
+    });
+  },
+
+  // Jump to Spot
+  // -------------------
 
   gotoSpot: function(spot) {
     this.activeSpot = spot;
@@ -98,11 +120,17 @@ var Spots = window.Spots = Dance.Performer.extend({
     this.map.setView(new L.LatLng(spot.latitude, spot.longitude), 15);
   },
 
+  // Jump to next Spot
+  // -------------------
+
   nextSpot: function() {
     if (!this.activeSpot) return this.gotoSpot(this.spots.first());
     var currentIndex = this.spots.index(this.activeSpot.id);
     this.gotoSpot(this.spots.at((currentIndex + 1) % this.spots.length));
   },
+
+  // Jump to previous Spot
+  // -------------------
 
   prevSpot: function() {
     if (!this.activeSpot) return this.gotoSpot(this.spots.last());
@@ -141,13 +169,15 @@ var Spots = window.Spots = Dance.Performer.extend({
 
     spot.marker.on('drag', _.bind(drag, this));
     spot.marker.on('click', _.bind(click, this));
-
     this.map.addLayer(spot.marker);
-    // this.render();
 
     if (!silent) this.trigger('update', this.spots);
     return spot;
   },
+
+
+  // Keyboard navigation - a pleasure
+  // -------------------
 
   registerKeyBindings: function() {
     $(document)
@@ -155,6 +185,7 @@ var Spots = window.Spots = Dance.Performer.extend({
       .keydown('left',  _.bind(function() { this.prevSpot(); this.render(); }, this))
       .keydown('esc',  _.bind(function() { this.activeSpot = null; this.render(); }, this));
   },
+
 
   // Register Map Events
   // -------------------
@@ -168,13 +199,9 @@ var Spots = window.Spots = Dance.Performer.extend({
 
       clickCount += 1;
       if (clickCount <= 1) {
-
         _.delay(function() {
           if (clickCount <= 1) {
-            console.log('adding spot');
             that.activeSpot = that.addSpot(e.latlng.lat, e.latlng.lng);
-
-            // that.showOverview();
             that.render();
           }
           clickCount = 0;
@@ -183,8 +210,10 @@ var Spots = window.Spots = Dance.Performer.extend({
     });
   },
 
+  // Render the beast
+  // -------------------
+
   render: function() {
-    // this.showOverview();
     this.layout();
     this.refresh();
 
@@ -197,7 +226,6 @@ var Spots = window.Spots = Dance.Performer.extend({
     } else {
       this.$('.spot-details').empty();
     }
-    
     return this;
   }
 });
