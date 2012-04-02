@@ -100,9 +100,11 @@ input { font: 13px/20px 'Helvetica Neue', Helvetica, Arial, sans-serif; }
     -moz-transition-duration:    0.4s;
     -webkit-transition-duration: 0.4s;
     transition-duration:         0.4s;
+    cursor: pointer;
   }
 
-  .spots-container .spots-navigation .spot:hover, .spots-container .spots-navigation .spot.active {
+  .spots-container .spots-navigation .spot.active {
+
     border: 3px solid #555;
   }
 
