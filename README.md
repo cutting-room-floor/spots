@@ -1,16 +1,9 @@
-MapBox Spot
+MapBox Spots
 ========
 
-
-Annotates maps.
-
-Synopsis
---------
-
-[Pinpoint](http://github.com/michael/pinpoint) lets you annotate any
-maps that are support by Leaflet. You can add an as many pins as you
-want, name and describe them, move them around and remove them when no
-longer needed.
+[MapBox Spots](http://github.com/mapbox/spots) lets you tell a story, using maps. 
+You can add an as many spots as you want, name and describe them, move them 
+around and remove them when no longer needed.
 
 ![image](http://substance-assets.s3.amazonaws.com/c0/fc0e1bf26323c456c46ab6d346aa94/pinpoint.png)
 
@@ -23,8 +16,11 @@ Usage
       zoom: 13,
     });
 
-    var annotator = new Pinpoint(map, {
-      update: function(pins) {
-        console.log('your pins just got updated:' + Object.keys(pins);
-      }
+    var spots = new Spots({
+      el: '.spots-container',
+      map: map
+    });
+
+    spots.bind('update', function(spots) {
+      // store spots, anyone?
     });
