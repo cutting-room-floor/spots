@@ -37,11 +37,15 @@ input { font: 13px/20px 'Helvetica Neue', Helvetica, Arial, sans-serif; }
 }
 
 .spots-container {
-  border-top: 1px solid #ccc;
+  /*border-top: 1px solid transparent;*/
+  border: 1px solid #ccc;
   position: relative;
-  top: -110px;
-  height: 110px;
-  background: #efefef;
+  top: -120px;
+  height: 100px;
+  margin: 10px;
+  background: #eee;
+  /*opacity: 0.9;*/
+  border-radius: 3px;
   }
 
   .spots-container .spot-details {

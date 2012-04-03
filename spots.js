@@ -34,7 +34,7 @@ collections["spots"] = {
     spots.each(function(spot) {
       $('#'+spot.id)
        .css('left', spot.pos.x)
-       .css('bottom', 10)
+       .css('bottom', 10);
     });
   },
 
@@ -145,7 +145,7 @@ var Spots = window.Spots = Dance.Performer.extend({
 
   addSpot: function(lat, lng, name, descr, id, silent) {
     var spot = {
-      id: id ? id : this.map._container.id + _.uniqueId('_spot_'),
+      id: id ? id : this.map._container.id + Data.uuid(),
       name: name || 'Untitled',
       descr: descr || 'Undescribed.' ,
       latitude: lat,

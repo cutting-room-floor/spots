@@ -63,25 +63,31 @@
             attributionControl: false
           });
 
-        var spots = new Data.Hash({
-          "spot1": {
-            "latitude": 51.505,
-            "longitude": -0.09,
-            "name": "A spot",
-            "descr": "A spot saying hello"
+        var data = new Data.Hash({
+          "map_spot_1": {
+            "latitude": 38.91310029076162,
+            "longitude": -77.03267812728882,
+            "name": "MapBox",
+            "descr": "MapBox Headquarters in Washington DC"
           },
-          "spot2": {
-            "latitude": 40.505,
-            "longitude": -0.08,
-            "name": "Another",
-            "descr": "Another spot"
+          "map_spot_2": {
+            "latitude": 48.30293692666153,
+            "longitude": 14.294521808624268,
+            "name": "Quasipartikel",
+            "descr": "The Quasipartikel Quasioffice in Linz, Austria"
+          },
+          "map_spot_3": {
+            "latitude": 40.689253770619686,
+            "longitude": -74.04454708099365,
+            "name": "Statue of Liberty",
+            "descr": "Sightseeing, anyone?"
           }
         });
 
-        var spots = new Spots({
+        window.spots = new Spots({
           el: '.spots-container',
           map: map,
-          spots: spots
+          spots: data
         });
 
         spots.bind('update', function(spots) {
