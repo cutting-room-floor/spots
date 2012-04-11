@@ -1,104 +1,83 @@
+<!DOCTYPE html>
 <html>
   <head>
     <title>Mapbox Spots</title>
+    <link rel='stylesheet' href='https://tiles.mapbox.com/assets/tilestream-pro/css/all.css' />
     <link rel='stylesheet' href='spots.css' />
 
-    <script src="lib/leaflet.js"></script>
-    <script src="lib/underscore.js"></script>
-    <script src="lib/data.js"></script>
-    <script src="lib/jquery.js"></script>
-    <script src="lib/jquery.hotkeys.js"></script>
-    <script src="lib/dance.js"></script>
-    <script src="spots.js"></script>
+    <script src='lib/modestmaps.min.js'></script>
+    <script src='lib/underscore.js'></script>
+    <script src='lib/jquery.js'></script>
+    <script src='lib/wax.mm.min.js'></script>
+    <!--
+    <script src='lib/data.js'></script>
+    <script src='lib/jquery.hotkeys.js'></script>
+    <script src='lib/dance.js'></script>
+    -->
+    <script src='site.js'></script>
 
-    <script type="text/x-ejs-template" name="overview">
-      <div class="spots">
+    <script type='text/x-ejs-template' name='overview'>
+      <div class='spots'>
         <% spots.each(function(spot) { %>
-          <div class="spot" data-id="<%= spot.id %>">
-            
+          <div class='spot' data-id='<%= spot.id %>'>
           </div>
         <% }); %>
       </div>
     </script>
 
-    <script type="text/x-ejs-template" name="nav_spot">
-      <div class="spot<%= active ? " active" : "" %>" id="<%= spot.id %>" data-id="<%= spot.id %>">
-        
+    <script type='text/x-ejs-template' name='nav_spot'>
+      <div class='spot<%= active ? ' active' : '' %>' id='<%= spot.id %>' data-id='<%= spot.id %>'>
       </div>
     </script>
 
-    <script type="text/x-ejs-template" name="spot">
-      <div class="spot-details" data-id="<%= spot.id %>">
-        <div><input type="text" class="name" placeholder="Enter Name" value="<%= spot.name %>" maxlength="30"/></div>
-        <div><textarea class="descr" placeholder="Description&hellip;" maxlength="140"><%= spot.descr %></textarea></div>
-        <div><a href="#" class="remove-spot"></div>
+    <script type='text/x-ejs-template' name='spot'>
+      <div class='spot-details' data-id='<%= spot.id %>'>
+        <div><input type='text' class='name' placeholder='Enter Name' value='<%= spot.name %>' maxlength='30'/></div>
+        <div><textarea class='descr' placeholder='Description&hellip;' maxlength='140'><%= spot.descr %></textarea></div>
+        <div><a href='#' class='remove-spot'></div>
       </div>
     </script>
 
   </head>
   <body>
-    <div class="container">
-      <div class="header">
-        <h1>MapBox Spots&#8482;</h1>
-        <div class="subtitle">Tell a story, using maps.</div>
+    <body id='app' class='fullscreen owner'><div class='wrapper'>
+      <div class='branding'><div class='limiter'>
+        <a class='logo' href='http://mapbox.com/'>MapBox</a>
+        <ul class='menu'>
+          <li class='tour'>
+            <a href='http://mapbox.com/tour/'><span class='icon'></span>Tour</a>
+          </li>
+          <li class='maps'>
+            <a href='http://mapbox.com/maps/'><span class='icon'></span>Maps</a>
+          </li>
+          <li class='tilemill'>
+            <a href='http://mapbox.com/tilemill/'><span class='icon'></span>TileMill</a>
+          </li>
+          <li class='help'>
+            <a href='http://mapbox.com/help/'><span class='icon'></span>Help</a>
+          </li>
+          <li class='plans '>
+            <a href='http://mapbox.com/plans/'><span class='icon'></span>Plans + Pricing</a>
+          </li>
+        </ul>
+      </small>
+    </div></div>
+    <div class='map'>
+      <div class='mapcanvas'>
+        <div id='map'></div>
       </div>
-      <div id="map_wrapper" style="width: 100%; height: 100%">
-        <div id="map" style="width: 100%; height: 100%;">
-
+      <div class='info hud active'>
+        <div class='content'>
+          <h2>Spot</h2>
         </div>
-        <div class="spots-container">
-          <div class="spot-details"></div>
-          <div class="spots-navigation"></div>
+        <div class='buttons joined'>
+          <a class="button labeled" href="#embed">
+            <span class="icon embed"></span>
+            Embed
+          </a>
         </div>
       </div>
-
-      <script>
-
-      $(function() {
-        var map = new L.Map('map', {
-            layers: new L.TileLayer('http://a.tiles.mapbox.com/v3/mapbox.mapbox-streets/{z}/{x}/{y}.png', {}),
-            center: new L.LatLng(51.505, -0.09),
-            zoom: 13,
-            maxZoom: 17,
-            attributionControl: false
-          });
-
-        var data = new Data.Hash({
-          "map_spot_1": {
-            "latitude": 38.91310029076162,
-            "longitude": -77.03267812728882,
-            "name": "MapBox",
-            "descr": "MapBox Headquarters in Washington DC"
-          },
-          "map_spot_2": {
-            "latitude": 48.30293692666153,
-            "longitude": 14.294521808624268,
-            "name": "Quasipartikel",
-            "descr": "The Quasipartikel Quasioffice in Linz, Austria"
-          },
-          "map_spot_3": {
-            "latitude": 40.689253770619686,
-            "longitude": -74.04454708099365,
-            "name": "Statue of Liberty",
-            "descr": "Sightseeing, anyone?"
-          }
-        });
-
-        window.spots = new Spots({
-          el: '.spots-container',
-          map: map,
-          spots: data
-        });
-
-        spots.bind('update', function(spots) {
-          // store spots, anyone?
-        });
-
-        spots.render();
-      });
-      </script>
     </div>
-
-    <a href="http://github.com/michael/pinpoint"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://assets2.github.com/img/71eeaab9d563c2b3c590319b398dd35683265e85?repo=&url=http%3A%2F%2Fs3.amazonaws.com%2Fgithub%2Fribbons%2Fforkme_right_gray_6d6d6d.png&path=" alt="Fork me on GitHub"></a>
+    </div>
   </body>
 </html>
