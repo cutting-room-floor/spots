@@ -3,6 +3,7 @@
   <head>
     <title>Mapbox Spots</title>
     <link rel='stylesheet' href='https://tiles.mapbox.com/assets/tilestream-pro/css/all.css' />
+    <link rel='stylesheet' href='controls.css' />
     <link rel='stylesheet' href='spots.css' />
     <script src='lib/modestmaps.min.js'></script>
     <script src='lib/underscore.js'></script>
@@ -11,8 +12,7 @@
     <script src='lib/mmg.js'></script>
     <script src='site.js'></script>
   </head>
-  <body>
-    <body id='app' class='fullscreen owner'><div class='wrapper'>
+  <body id='app' class='fullscreen owner'><div class='wrapper'>
       <div class='branding'><div class='limiter'>
         <a class='logo' href='http://mapbox.com/'>MapBox</a>
         <ul class='menu'>
@@ -40,21 +40,21 @@
       </div>
       <div class='info hud active'>
         <small class='hudlinks'>
-          <a class="n1 edit " href="#edit"><span class="icon edit"></span> Edit</a>
+          <a class='n1 edit ' href='#edit'><span class='icon edit'></span> Edit</a>
         </small>
         <div class='content'>
           <h2>Spot</h2>
           <a id='add-point' href='#add'>add point</a>
           <a id='edit-point' href='#add'>edit point</a>
-        </div>
-        <div class='buttons joined'>
-          <a class="button labeled" href="#embed">
-            <span class="icon embed"></span>
-            Embed
-          </a>
+          <div id='point-select'></div>
+          <textarea id='embed'></textarea>
         </div>
       </div>
     </div>
+    </div>
+    <div id='edit-form'>
+      <div><input type='text' class='name' placeholder='Name' value='' maxlength='30'/></div>
+      <div><textarea class='descr' placeholder='Description'></textarea></div>
     </div>
   </body>
 </html>
