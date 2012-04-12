@@ -1,9 +1,21 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>MapBox Spot</title>
+    <title>MapBox Pointer</title>
     <script type='text/javascript' src='modestmaps.js'></script>
+    <script type='text/javascript' src='wax.mm.min.js'></script>
+    <script type='text/javascript' src='jquery.js'></script>
+    <script type='text/javascript' src='site.js'></script>
+    <link href='site.css' rel='stylesheet' type='text/css' />
   </head>
   <body>
+    <h3>MapBox Pointer</h3>
+    <p>This is a tool to quickly and easily make simple maps with dynamic points.</p>
+    <p>To get started, enter your username to retrieve available maps.</p>
+    <form id='username-form'>
+      <input placeholder='username' type='text' id='username' /> <input type='submit' value='load' />
+      <select id='map-select'></map>
+    </form>
+    <div id='map'></div>
   </body>
 </html>
