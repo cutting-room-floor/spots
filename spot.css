@@ -18,3 +18,17 @@
 #point-select {
   display:none;
 }
+
+.spot-popup {
+  font:13px/20px 'Helvetica Neue';
+  padding:10px;
+  width:280px;
+  z-index:999;
+  background:#fff;
+  display:none;
+  position:absolute;
+}
+
+.spot-popup h3, .spot-popup p {
+  margin:0;
+}
