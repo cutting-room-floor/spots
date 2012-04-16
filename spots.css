@@ -29,11 +29,12 @@ textarea#embed {
 .icon-c { background-position:-64px 0; }
 .icon-d { background-position:-86px 0; }
 
-#point-select div {
-  float:left;
+#point-select {
+  display:none;
 }
 
 #edit-form {
   background:#fff;
   display:none;
+  z-index:99999;
 }
