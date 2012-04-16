@@ -71,11 +71,11 @@ $(function() {
       // and in the middle but down 200px
       map.panBy(
         ((map.dimensions.x - 280) / 2) - ftpx.x,
-        (map.dimensions.y / 2) - ftpx.y);
+        (map.dimensions.y / 2) - ftpx.y + 80);
 
       $('#edit-form').fadeIn()
         .css('left', (((map.dimensions.x - 280) / 2) - 150) + 'px')
-        .css('bottom', ((map.dimensions.y / 2) + 20) + 'px');
+        .css('bottom', ((map.dimensions.y / 2) - 30) + 'px');
 
       $('#feature-name').val(feature.properties.name || '');
       $('#feature-description').val(feature.properties.description || '');
