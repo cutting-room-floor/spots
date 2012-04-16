@@ -24,7 +24,8 @@ $(function() {
       $('<div class="icon"></div>').appendTo(d)
       .addClass('point-icon')
       .addClass(x.properties.style).click(function(e) {
-        editpoint(x);
+        activeid = x.properties.id;
+        editfeature();
       });
       return d[0];
     }).geojson(geojson);
@@ -36,7 +37,7 @@ $(function() {
     var newmarker = $('<div class="icon"></div>')
       .addClass('point-icon');
 
-    var activefeature;
+    var activeid;
 
     function movemarker(e) {
       newmarker.offset({
@@ -47,11 +48,11 @@ $(function() {
 
     function hideonpan() {
       $('#edit-form').hide();
-      activefeature = null;
+      activefeature = -1;
     }
 
     function editfeature() {
-      var feature = activefeature;
+      var feature = markers.byid()[activeid];
       var ftpx = map.locationPoint({
         lat: feature.geometry.coordinates[1],
         lon: feature.geometry.coordinates[0]
@@ -60,26 +61,36 @@ $(function() {
       // move map to put feature at the center,
       // and in the middle but down 200px
       map.panBy(
-        (map.dimensions.x / 2) - ftpx.x,
+        ((map.dimensions.x - 280) / 2) - ftpx.x,
         (map.dimensions.y / 2) - ftpx.y);
 
-      $('#edit-form').show()
+      $('#edit-form').fadeIn()
+        .css('left', (((map.dimensions.x - 280) / 2) - 150) + 'px')
         .css('bottom', ((map.dimensions.y / 2) + 20) + 'px');
+
+      $('#feature-name').val(feature.properties.name || '');
+      $('#feature-description').val(feature.properties.description || '');
 
       map.addCallback('panned', hideonpan);
     }
 
-    $('#edit-form a#save').click(function() {
-      if (activefeature) {
-        activefeature.properties = {
-          name: $('#feature-name').val(),
-          description: $('#feature-description').val()
-        };
+    function replacefeature(id, feature) {
+      var gj = markers.geojson();
+      for (var i = 0; i < gj.features.length; i++) {
+        if (gj.features[i].properties.id === id) {
+          gj.features[i] = feature;
+        }
       }
+      return gj;
+    }
+
+    $('#edit-form a#save').click(function() {
+      markers.byid()[activeid].properties.name = $('#feature-name').val();
+      markers.byid()[activeid].properties.description = $('#feature-description').val();
       $('#edit-form').hide();
-      activefeature = null;
+      markers.draw();
+      activeid = null;
       map.removeCallback('panned', hideonpan);
-      markers.geojson(gj);
     });
 
     $('#edit-form a#cancel').click(function() {
@@ -100,6 +111,7 @@ $(function() {
           px.x -= 10;
           var loc = map.pointLocation(px);
           var gj = markers.geojson();
+          activeid = markers.gen_id();
           gj.features.push({
             type:"Feature",
             geometry:{
@@ -107,14 +119,13 @@ $(function() {
               coordinates:[loc.lon, loc.lat]
             },
             properties: {
-              style: "icon-a"
+              style: "icon-a",
+              id: activeid
             }
           });
           markers.geojson(gj);
           endadd();
-          var gj = markers.geojson();
-          activefeature = gj.features[gj.features.length - 1];
-          editfeature(activefeature);
+          editfeature();
         }
       });
     }
@@ -126,9 +137,9 @@ $(function() {
     }
 
     function endadd() {
+      newmarker.remove();
       $(map.parent).unbind('mousemove', movemarker);
       $(map.parent).unbind('mousedown', addfeature);
-      newmarker.remove();
     }
 
     $('#add').click(function(e) {
@@ -145,7 +156,7 @@ $(function() {
     }
 
     var gj = markers.geojson();
-    activefeature = gj.features[gj.features.length - 1];
+    activeid = gj.features[gj.features.length - 1].properties.id;
     editfeature();
 
     window.setInterval(function() {

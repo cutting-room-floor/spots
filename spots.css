@@ -36,12 +36,9 @@ textarea#embed {
 
 #edit-form {
   position:absolute;
-  left:50%;
   display:none;
   z-index:99999;
   width:300px;
-  margin-left:-150px;
-  padding-top:70px;
 }
 
 .edit-inner {
