@@ -22,6 +22,7 @@ textarea#embed {
   width:20px;
   height:30px;
   background:url(markers.png);
+  position:absolute;
 }
 
 .icon-a { background-position:-22px 0; }

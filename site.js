@@ -44,7 +44,10 @@ $(function() {
         });
       });
       $(window).click(function(e) {
-        var loc = map.pointLocation(MM.getMousePoint(e, map));
+        var px = MM.getMousePoint(e, map);
+        px.y += 20;
+        px.x -= 10;
+        var loc = map.pointLocation(px);
         var gj = markers.geojson();
         gj.features.push({
           type:"Feature",
