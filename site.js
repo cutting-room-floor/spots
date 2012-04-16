@@ -8,8 +8,8 @@ var geojson = {
       "coordinates":[-88, 38]
     },
     "properties": {
-      "id": 1,
-      "style": "icon-a"
+      "style": "icon-a",
+      "id": 0
     }
   }]
 };
@@ -30,6 +30,8 @@ $(function() {
       return d[0];
     }).geojson(geojson);
 
+    markers.gen_id();
+
     map.addLayer(markers);
 
     wax.mm.zoomer(map).appendTo(map.parent);
@@ -37,7 +39,7 @@ $(function() {
     var newmarker = $('<div class="icon"></div>')
       .addClass('point-icon');
 
-    var activeid;
+    var activeid = 0; // for testing
 
     function movemarker(e) {
       newmarker.offset({
@@ -93,10 +95,19 @@ $(function() {
       map.removeCallback('panned', hideonpan);
     });
 
+    $('#edit-form a#remove').click(function() {
+      $('#edit-form').hide();
+      markers.rm(activeid);
+      markers.draw();
+      markers.correct(true);
+      map.removeCallback('panned', hideonpan);
+      activeid = null;
+    });
+
     $('#edit-form a#cancel').click(function() {
       $('#edit-form').hide();
       map.removeCallback('panned', hideonpan);
-      activefeature = null;
+      activeid = null;
     });
 
     $('#edit-form').show();
