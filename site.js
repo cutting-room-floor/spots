@@ -39,6 +39,13 @@ $(function() {
     var newmarker = $('<div class="icon"></div>')
       .addClass('point-icon');
 
+   for (var letter = 0; letter < 14; letter++) {
+   var place = $('<div></div>').appendTo('#point-select')
+        .addClass('point-icon')
+        .addClass('icon-' + String.fromCharCode(letter + 97))
+        .attr('title', 'icon-' + String.fromCharCode(letter + 97));
+    }
+
     var activeid = 0; // for testing
 
     function movemarker(e) {
@@ -72,9 +79,16 @@ $(function() {
 
       $('#feature-name').val(feature.properties.name || '');
       $('#feature-description').val(feature.properties.description || '');
+      $('#point-select .point-icon').removeClass('selected');
+      $('#point-select .' + feature.properties.style).addClass('selected');
 
       map.addCallback('panned', hideonpan);
     }
+
+    $('#point-select .point-icon').click(function() {
+      $('#point-select .point-icon').removeClass('selected');
+      $(this).addClass('selected');
+    });
 
     function replacefeature(id, feature) {
       var gj = markers.geojson();
@@ -89,7 +103,12 @@ $(function() {
     $('#edit-form a#save').click(function() {
       markers.byid()[activeid].properties.name = $('#feature-name').val();
       markers.byid()[activeid].properties.description = $('#feature-description').val();
+
+      var c = $('#point-select .selected').attr('class').split(' ');
+      markers.byid()[activeid].properties.style = c[1];
+
       $('#edit-form').hide();
+      markers.correct(true);
       markers.draw();
       activeid = null;
       map.removeCallback('panned', hideonpan);
@@ -158,13 +177,6 @@ $(function() {
       e.preventDefault();
       startadd();
     });
-
-    for (var letter = 0; letter < 4; letter++) {
-      var place = $('<div></div>').appendTo('#point-select')
-        .addClass('point-icon')
-        .addClass('icon-' + String.fromCharCode(letter + 97))
-        .attr('title', 'icon-' + String.fromCharCode(letter + 97));
-    }
 
     var gj = markers.geojson();
     activeid = gj.features[gj.features.length - 1].properties.id;

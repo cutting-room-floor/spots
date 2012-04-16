@@ -29,9 +29,34 @@ textarea#embed {
 .icon-b { background-position:-43px 0; }
 .icon-c { background-position:-64px 0; }
 .icon-d { background-position:-86px 0; }
+.icon-e { background-position:-107px 0; }
+.icon-f { background-position:-129px 0; }
+.icon-g { background-position:-149px 0; }
+.icon-h { background-position:-169px 0; }
+.icon-i { background-position:-191px 0; }
+.icon-j { background-position:-211px 0; }
+.icon-k { background-position:-233px 0; }
+.icon-l { background-position:-254px 0; }
+.icon-m { background-position:-275px 0; }
+.icon-n { background-position:-296px 0; }
 
 #point-select {
-  display:none;
+  width:290px;
+  height:30px;
+  padding:5px;
+  overflow:auto;
+  white-space:nowrap;
+}
+
+#point-select .point-icon {
+  cursor:pointer;
+  position:relative;
+  float:left;
+  opacity:0.5;
+}
+
+#point-select .point-icon.selected {
+  opacity:1;
 }
 
 #edit-form {

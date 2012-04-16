@@ -3,7 +3,6 @@
   <head>
     <title>Mapbox Spots</title>
     <link rel='stylesheet' href='https://tiles.mapbox.com/assets/tilestream-pro/css/all.css' />
-    <link rel='stylesheet' href='controls.css' />
     <link rel='stylesheet' href='spots.css' />
     <script src='http://127.0.0.1:1337/'></script>
     <script src='lib/modestmaps.min.js'></script>
@@ -46,7 +45,6 @@
         <div class='content'>
           <h2>Build a Map</h2>
           <a href='#add' id='add'>add point</a>
-          <div id='point-select'></div>
           <p>Copy &amp; paste the code below into your page.</p>
           <textarea id='embed'></textarea>
         </div>
@@ -57,6 +55,7 @@
       <div class='edit-inner'>
         <div><input id='feature-name' type='text' class='name' placeholder='Name' value='' maxlength='30'/></div>
         <div><textarea id='feature-description' class='descr' placeholder='Description'></textarea></div>
+        <div id='point-select'></div>
         <div class='buttons'>
           <a href='#' id='save' class='button'>save</a>
           <a href='#' id='cancel' class='button disabled'>cancel</a>

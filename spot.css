@@ -15,10 +15,6 @@
 .icon-c { background-position:-64px 0; }
 .icon-d { background-position:-86px 0; }
 
-#point-select {
-  display:none;
-}
-
 .spot-popup {
   font:13px/20px 'Helvetica Neue';
   padding:10px;
