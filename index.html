@@ -54,8 +54,14 @@
     </div>
     </div>
     <div id='edit-form'>
-      <div><input type='text' class='name' placeholder='Name' value='' maxlength='30'/></div>
-      <div><textarea class='descr' placeholder='Description'></textarea></div>
+      <div class='edit-inner'>
+        <div><input id='feature-name' type='text' class='name' placeholder='Name' value='' maxlength='30'/></div>
+        <div><textarea id='feature-description' class='descr' placeholder='Description'></textarea></div>
+        <div class='buttons'>
+          <a href='#' id='save' class='button'>save</a>
+          <a href='#' id='cancel' class='button destructive'>cancel</a>
+        </div>
+      </div>
     </div>
   </body>
 </html>

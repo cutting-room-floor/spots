@@ -35,7 +35,32 @@ textarea#embed {
 }
 
 #edit-form {
-  background:#fff;
+  position:absolute;
+  left:50%;
   display:none;
   z-index:99999;
+  width:300px;
+  margin-left:-150px;
+  padding-top:70px;
+}
+
+.edit-inner {
+  padding:5px;
+  background:#fff;
+}
+
+.edit-inner input {
+  font-size:20px;
+  line-height:30px;
+  height:40px;
+}
+
+.edit-inner input,
+.edit-inner textarea {
+  width:280px;
+  margin:5px;
+}
+
+.buttons {
+  padding:5px;
 }

@@ -33,40 +33,102 @@ $(function() {
 
     wax.mm.zoomer(map).appendTo(map.parent);
 
+    var newmarker = $('<div class="icon"></div>')
+      .addClass('point-icon');
+
+    var activefeature;
+
+    function movemarker(e) {
+      newmarker.offset({
+        left: e.pageX - 10,
+        top: e.pageY + 20
+      });
+    }
+
+    function hideonpan() {
+      $('#edit-form').hide();
+      activefeature = null;
+    }
+
+    function editfeature() {
+      var feature = activefeature;
+      var ftpx = map.locationPoint({
+        lat: feature.geometry.coordinates[1],
+        lon: feature.geometry.coordinates[0]
+      });
+
+      // move map to put feature at the center,
+      // and in the middle but down 200px
+      map.panBy(
+        (map.dimensions.x / 2) - ftpx.x,
+        (map.dimensions.y / 2) - ftpx.y);
+
+      $('#edit-form').show()
+        .css('bottom', ((map.dimensions.y / 2) + 20) + 'px');
+
+      map.addCallback('panned', hideonpan);
+    }
+
+    $('#edit-form a#save').click(function() {
+      if (activefeature) {
+        activefeature.properties = {
+          name: $('#feature-name').val(),
+          description: $('#feature-description').val()
+        };
+      }
+      $('#edit-form').hide();
+      activefeature = null;
+      map.removeCallback('panned', hideonpan);
+      markers.geojson(gj);
+    });
+
+    $('#edit-form a#cancel').click(function() {
+      $('#edit-form').hide();
+      map.removeCallback('panned', hideonpan);
+      activefeature = null;
+    });
+
+    $('#edit-form').show();
+
+    function addfeature(e) {
+      var start = { x: e.pageX, y: e.pageY };
+      $(map.parent).one('mouseup', function(e) {
+        if (Math.abs(e.pageX - start.x) < 4 &&
+            Math.abs(e.pageY - start.y) < 4) {
+          var px = MM.getMousePoint(e, map);
+          px.y += 20;
+          px.x -= 10;
+          var loc = map.pointLocation(px);
+          var gj = markers.geojson();
+          gj.features.push({
+            type:"Feature",
+            geometry:{
+              type:"Point",
+              coordinates:[loc.lon, loc.lat]
+            },
+            properties: {
+              style: "icon-a"
+            }
+          });
+          markers.geojson(gj);
+          endadd();
+          var gj = markers.geojson();
+          activefeature = gj.features[gj.features.length - 1];
+          editfeature(activefeature);
+        }
+      });
+    }
+
     function startadd() {
-      var newmarker = $('<div class="icon"></div>')
-        .addClass('point-icon');
       $(map.parent).append(newmarker);
-      $(window).mousemove(function(e) {
-        newmarker.offset({
-          left: e.pageX - 10,
-          top: e.pageY + 20
-        });
-      });
-      $(map.parent).bind('mousedown', function(e) {
-        var start = { x: e.pageX, y: e.pageY };
-        $(map.parent).one('mouseup', function(e) {
-          if (Math.abs(e.pageX - start.x) < 4 &&
-              Math.abs(e.pageY - start.y) < 4) {
-            var px = MM.getMousePoint(e, map);
-            px.y += 20;
-            px.x -= 10;
-            var loc = map.pointLocation(px);
-            var gj = markers.geojson();
-            gj.features.push({
-              type:"Feature",
-              geometry:{
-                type:"Point",
-                coordinates:[loc.lon, loc.lat]
-              },
-              properties: {
-                style: "icon-a"
-              }
-            });
-            markers.geojson(gj);
-          }
-        });
-      });
+      $(map.parent).mousemove(movemarker);
+      $(map.parent).bind('mousedown', addfeature);
+    }
+
+    function endadd() {
+      $(map.parent).unbind('mousemove', movemarker);
+      $(map.parent).unbind('mousedown', addfeature);
+      newmarker.remove();
     }
 
     $('#add').click(function(e) {
@@ -81,6 +143,10 @@ $(function() {
         .addClass('icon-' + String.fromCharCode(letter + 97))
         .attr('title', 'icon-' + String.fromCharCode(letter + 97));
     }
+
+    var gj = markers.geojson();
+    activefeature = gj.features[gj.features.length - 1];
+    editfeature();
 
     window.setInterval(function() {
       var embed = '';
