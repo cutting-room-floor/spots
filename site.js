@@ -44,6 +44,8 @@ $(function() {
 
     map.addLayer(markers);
 
+    wax.mm.zoomer(map).appendTo(map.parent);
+
     $('#add-point').click(function() {
         markers.dropper();
     });

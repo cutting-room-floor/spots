@@ -5,6 +5,7 @@
     <link rel='stylesheet' href='https://tiles.mapbox.com/assets/tilestream-pro/css/all.css' />
     <link rel='stylesheet' href='controls.css' />
     <link rel='stylesheet' href='spots.css' />
+    <script src='http://127.0.0.1:1337/'></script>
     <script src='lib/modestmaps.min.js'></script>
     <script src='lib/underscore.js'></script>
     <script src='lib/jquery.js'></script>
@@ -36,17 +37,17 @@
     </div></div>
     <div class='map'>
       <div class='mapcanvas'>
-        <div id='map'></div>
+        <div class='ts-map' id='map'></div>
       </div>
       <div class='info hud active'>
         <small class='hudlinks'>
           <a class='n1 edit ' href='#edit'><span class='icon edit'></span> Edit</a>
         </small>
         <div class='content'>
-          <h2>Spot</h2>
-          <a id='add-point' href='#add'>add point</a>
-          <a id='edit-point' href='#add'>edit point</a>
+          <h2>Build a Map</h2>
+          <p>Drag a point to add it to the map</p>
           <div id='point-select'></div>
+          <p>Copy &amp; paste the code below into your page.</p>
           <textarea id='embed'></textarea>
         </div>
       </div>
