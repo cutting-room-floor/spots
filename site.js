@@ -43,23 +43,29 @@ $(function() {
           top: e.pageY + 20
         });
       });
-      $(window).click(function(e) {
-        var px = MM.getMousePoint(e, map);
-        px.y += 20;
-        px.x -= 10;
-        var loc = map.pointLocation(px);
-        var gj = markers.geojson();
-        gj.features.push({
-          type:"Feature",
-          geometry:{
-            type:"Point",
-            coordinates:[loc.lon, loc.lat]
-          },
-          properties: {
-            style: "icon-a"
+      $(map.parent).bind('mousedown', function(e) {
+        var start = { x: e.pageX, y: e.pageY };
+        $(map.parent).one('mouseup', function(e) {
+          if (Math.abs(e.pageX - start.x) < 4 &&
+              Math.abs(e.pageY - start.y) < 4) {
+            var px = MM.getMousePoint(e, map);
+            px.y += 20;
+            px.x -= 10;
+            var loc = map.pointLocation(px);
+            var gj = markers.geojson();
+            gj.features.push({
+              type:"Feature",
+              geometry:{
+                type:"Point",
+                coordinates:[loc.lon, loc.lat]
+              },
+              properties: {
+                style: "icon-a"
+              }
+            });
+            markers.geojson(gj);
           }
         });
-        markers.geojson(gj);
       });
     }
 
@@ -90,6 +96,6 @@ $(function() {
           JSON.stringify(markers.geojson()) +
           '})()</script>';
       $('#embed').val(embed);
-    });
+    }, 1000);
   });
 });
