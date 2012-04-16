@@ -173,16 +173,29 @@ $(function() {
     window.setInterval(function() {
       var embed = '';
       var scripts = [
+        'http://mapbox-js.s3.amazonaws.com/spot/0.0.0/spot.js',
         'http://js.mapbox.com/mm/1.0.0-beta1/modestmaps.min.js',
         'http://js.mapbox.com/wax/6.0.0-beta2/wax.mm.min.js',
-        'http://js.mapbox.com/mmg/1.0.0-beta1/mmg.min.js'
+        'http://js.mapbox.com/mmg/0.0.0/mmg.js'
       ];
       for (var i = 0; i < scripts.length; i++) {
           embed += '<script src="' + scripts[i] + '"></script>';
       }
-      embed += '<script>(function(){\nvar geojson=' +
-          JSON.stringify(markers.geojson()) +
-          '})()</script>';
+      embed += '<link rel="stylesheet" href="http://mapbox-js.s3.amazonaws.com/spot/0.0.0/spot.css" />';
+      var id = (+new Date()).toString(16);
+      embed += '<div style="height:640px;height:480px;" id="map-' + id + '"></div>';
+      embed += '<script>(function(){';
+      embed += 'spots(' + JSON.stringify({
+        center: {
+          lat: map.center().lat,
+          lon: map.center().lon
+        },
+        zoom: map.zoom(),
+        geojson: markers.geojson(),
+        id: id,
+        tiles: 'http://a.tiles.mapbox.com/v3/mapbox.mapbox-streets.jsonp'
+      }) + ');';
+      embed += '})()</script>';
       $('#embed').val(embed);
     }, 1000);
   });

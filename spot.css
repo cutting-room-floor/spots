@@ -1,0 +1,20 @@
+/* wtf */
+.place {
+  width:50px;
+}
+
+.point-icon {
+  width:20px;
+  height:30px;
+  background:url(markers.png);
+  position:absolute;
+}
+
+.icon-a { background-position:-22px 0; }
+.icon-b { background-position:-43px 0; }
+.icon-c { background-position:-64px 0; }
+.icon-d { background-position:-86px 0; }
+
+#point-select {
+  display:none;
+}
