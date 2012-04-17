@@ -21,11 +21,35 @@ $(function() {
 
     var markers = mmg().map(map).factory(function(x) {
       var d = $('<div class="place"></div>');
-      $('<div class="icon"></div>').appendTo(d)
+      var icon = $('<div class="icon"></div>').appendTo(d)
       .addClass('point-icon')
-      .addClass(x.properties.style).click(function(e) {
-        activeid = x.properties.id;
-        editfeature();
+      .addClass(x.properties.style).mousedown(function(e) {
+        var start = { x: e.pageX, y: e.pageY };
+        var moving = false;
+        function watchmove(e) {
+          if (Math.abs(e.pageX - start.x) > 3 &&
+              Math.abs(e.pageY - start.y) > 3 && !moving) {
+            newmarker = $(this);
+            $(map.parent).bind('mousemove', movemarker);
+            $(map.parent).one('mouseup', function(e) {
+              $(map.parent).unbind('mousemove', movemarker);
+              var px = MM.getMousePoint(e, map);
+              px.y += 45;
+              var loc = map.pointLocation(px);
+              x.geometry.coordinates = [loc.lon, loc.lat];
+            });
+            moving = true;
+          }
+        }
+        $(icon).bind('mousemove', watchmove);
+        $(icon).one('mouseup', function(e) {
+          if (Math.abs(e.pageX - start.x) < 3 &&
+              Math.abs(e.pageY - start.y) < 3) {
+            $(icon).unbind('mousemove', watchmove);
+            activeid = x.properties.id;
+            editfeature();
+          }
+        });
       });
       return d[0];
     }).geojson(geojson);
@@ -53,6 +77,7 @@ $(function() {
         left: e.pageX - 10,
         top: e.pageY + 20
       });
+      e.stopPropagation();
     }
 
     function hideonpan() {
@@ -60,6 +85,7 @@ $(function() {
       activefeature = -1;
     }
 
+    /* move the map into editing mode */
     function editfeature() {
       var feature = markers.byid()[activeid];
       var ftpx = map.locationPoint({
@@ -67,8 +93,6 @@ $(function() {
         lon: feature.geometry.coordinates[0]
       });
 
-      // move map to put feature at the center,
-      // and in the middle but down 200px
       map.panBy(
         ((map.dimensions.x - 280) / 2) - ftpx.x,
         (map.dimensions.y / 2) - ftpx.y + 80);
@@ -100,6 +124,7 @@ $(function() {
       return gj;
     }
 
+    /* edit form buttons =================================================== */
     $('#edit-form a#save').click(function() {
       markers.byid()[activeid].properties.name = $('#feature-name').val();
       markers.byid()[activeid].properties.description = $('#feature-description').val();
@@ -137,16 +162,15 @@ $(function() {
         if (Math.abs(e.pageX - start.x) < 4 &&
             Math.abs(e.pageY - start.y) < 4) {
           var px = MM.getMousePoint(e, map);
-          px.y += 20;
-          px.x -= 10;
+          px.y += 45;
           var loc = map.pointLocation(px);
           var gj = markers.geojson();
           activeid = markers.gen_id();
           gj.features.push({
-            type:"Feature",
+            type: "Feature",
             geometry:{
-              type:"Point",
-              coordinates:[loc.lon, loc.lat]
+              type: "Point",
+              coordinates: [loc.lon, loc.lat]
             },
             properties: {
               style: "icon-a",
@@ -186,16 +210,23 @@ $(function() {
       var embed = '';
       var scripts = [
         'http://mapbox-js.s3.amazonaws.com/spot/0.0.0/spot.js',
-        'http://js.mapbox.com/mm/1.0.0-beta1/modestmaps.min.js',
-        'http://js.mapbox.com/wax/6.0.0-beta2/wax.mm.min.js',
-        'http://js.mapbox.com/mmg/0.0.0/mmg.js'
+        'http://mapbox-js.s3.amazonaws.com/mm/1.0.0-beta1/modestmaps.min.js',
+        'http://mapbox-js.s3.amazonaws.com/wax/6.0.0-beta2/wax.mm.min.js',
+        'http://mapbox-js.s3.amazonaws.com/mmg/0.0.0/mmg.js'
       ];
       for (var i = 0; i < scripts.length; i++) {
           embed += '<script src="' + scripts[i] + '"></script>';
       }
-      embed += '<link rel="stylesheet" href="http://mapbox-js.s3.amazonaws.com/spot/0.0.0/spot.css" />';
+      var stylesheets = [
+        'http://a.tiles.mapbox.com/lib/mm/embed.css',
+        'http://mapbox-js.s3.amazonaws.com/spot/0.0.0/spot.css'];
+
+      for (var i = 0; i < stylesheets.length; i++) {
+        embed += '<link rel="stylesheet" href="' + stylesheets[i] + '" />';
+      }
+
       var id = (+new Date()).toString(16);
-      embed += '<div style="height:640px;height:480px;" id="map-' + id + '"></div>';
+      embed += '<div style="height:640px;height:480px;" class="ts-map" id="map-' + id + '"></div>';
       embed += '<script>(function(){';
       embed += 'spots(' + JSON.stringify({
         center: {

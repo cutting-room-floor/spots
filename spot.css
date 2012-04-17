@@ -33,6 +33,7 @@
   background:#fff;
   display:none;
   position:absolute;
+  -webkit-box-shadow: rgba(0, 0, 0, .25) 0px 0px 5px
 }
 
 .spot-popup h3, .spot-popup p {

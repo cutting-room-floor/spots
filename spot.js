@@ -38,5 +38,7 @@ function spots(o) {
       };
       return d;
     }).geojson(o.geojson));
+
+    wax.mm.zoomer(m).appendTo(m.parent);
   });
 }
